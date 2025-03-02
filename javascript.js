@@ -1,6 +1,19 @@
 let humanScore = 0;
 let computerScore = 0;
 
+function capitalize(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+const rock = document.querySelector("#rock");
+const paper = document.querySelector("#paper");
+const scissors = document.querySelector("#scissor");
+const result = document.querySelector("#results");
+
+rock.addEventListener("click", () => {playRound("rock", getComputerChoice())});
+paper.addEventListener("click", () => {playRound("paper", getComputerChoice())});
+scissors.addEventListener("click", () => {playRound("scissors", getComputerChoice())});
+
 function getComputerChoice(){
     let probability = Math.random();
     let computerChoice;
@@ -16,31 +29,37 @@ function getComputerChoice(){
     return computerChoice;
 }
 
-function getHumanChoice(){
-    let humanChoice = prompt("Rock, paper or scissors?");
-    return humanChoice.toLowerCase();
-}
-
 function playRound(humanChoice, computerChoice){
     let outcome;
     if (humanChoice === computerChoice){
         outcome = "It's a tie!";
     }
     else if (humanChoice === "rock" && computerChoice === "scissors" || humanChoice === "paper" && computerChoice==="rock" || humanChoice === "scissors" && computerChoice === "paper"){
-        outcome = `You win! ${humanChoice} beats ${computerChoice}.`;
+        outcome = `You win! ` + capitalize(humanChoice) + ` beats ${computerChoice}.`;
         ++humanScore;
     }
     else if (humanChoice === "scissors" && computerChoice === "rock" || humanChoice === "rock" && computerChoice === "paper" || humanChoice === "paper" && computerChoice === "scissors"){
-        outcome = `You lose! ${computerChoice} beats ${humanChoice}.`;
+        outcome = `You lose! ` + capitalize(computerChoice) + ` beats ${humanChoice}.`;
         ++computerScore;
     }
     else {
         outcome = "Invalid input. Please input rock, paper or scissors.";
     }
-    return outcome;
+    if(humanScore == 5){
+        result.textContent = "\n" + outcome + "\n\nYour Score: " + humanScore 
+            + "\n\nComputer Score: " + computerScore + "\n\nYou win!";
+    }
+    else if(computerScore == 5){
+        result.textContent = "\n" + outcome + "\n\nYour Score: " + humanScore 
+            + "\n\nComputer Score: " + computerScore + "\n\nComputer wins!";
+    }
+    else{
+        result.textContent = "\n" + outcome + "\n\nYour Score: " + humanScore 
+            + "\n\nComputer Score: " + computerScore;
+    }
 }
 
-function playGame(){
+/*function playGame(){
     for(i = 0; i < 5; i++){
         console.log(playRound(getHumanChoice(), getComputerChoice()));
     }
@@ -53,9 +72,9 @@ function playGame(){
     else {
         console.log(`You have a score of ${humanScore}, while the computer has a score of ${computerScore} as well. It's a tie!`);
     }
-}
+}*/
 
-playGame();
+//playGame();
 
 /*
 let string outcome.
